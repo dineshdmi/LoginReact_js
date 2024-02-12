@@ -1,0 +1,52 @@
+/* Navbar styling */
+.navbar {
+    background-color: #b5e70f;
+    /* Navbar background color */
+}
+
+/* Container styling */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo styling */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Navigation links styling */
+.nav-link {
+    color: #fff;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+/* Active link styling */
+.nav-link.active {
+    font-weight: bold;
+}
+
+/* Remove default Bootstrap active link background */
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active:hover {
+    background-color: transparent;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-brand {
+        margin-bottom: 10px;
+    }
+
+    .nav-link {
+        margin-bottom: 10px;
+    }
+}
