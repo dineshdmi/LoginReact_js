@@ -1,115 +1,108 @@
-import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import SIgn_img from './SIgn_img'
-import { useNavigate } from 'react-router-dom'
+// Login.js
+import React, { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import './CSS/Login.css'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const Login = () => {
-
     const history = useNavigate();
-
     const [inpval, setInpval] = useState({
-        email: "",
-        password: ""
-    })
-
-    const [data, setData] = useState([]);
-    console.log(inpval);
+        email: '',
+        password: '',
+    });
 
     const getdata = (e) => {
-        // console.log(e.target.value);
-
-
         const { value, name } = e.target;
-        // console.log(value,name);
+        setInpval((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
 
-
-        setInpval(() => {
-            return {
-                ...inpval,
-                [name]: value
-            }
-        })
-
-    }
-
-    const addData = (e) => {
+    const addData = async (e) => {
         e.preventDefault();
 
-        const getuserArr = localStorage.getItem("useryoutube");
-        console.log(getuserArr);
+        const getuserArr = localStorage.getItem('useryoutube');
 
         const { email, password } = inpval;
-        if (email === "") {
-            toast.error('email field is requred', {
-                position: "top-center",
+        if (email === '') {
+            toast.error('Email field is required', {
+                position: 'top-center',
             });
-        } else if (!email.includes("@")) {
-            toast.error('plz enter valid email addres', {
-                position: "top-center",
+        } else if (!email.includes('@')) {
+            toast.error('Please enter a valid email address', {
+                position: 'top-center',
             });
-        } else if (password === "") {
-            toast.error('password field is requred', {
-                position: "top-center",
+        } else if (password === '') {
+            toast.error('Password field is required', {
+                position: 'top-center',
             });
         } else if (password.length < 5) {
-            toast.error('password length greater five', {
-                position: "top-center",
+            toast.error('Password length must be greater than five', {
+                position: 'top-center',
             });
         } else {
-
             if (getuserArr && getuserArr.length) {
                 const userdata = JSON.parse(getuserArr);
                 const userlogin = userdata.filter((el, k) => {
-                    return el.email === email && el.password === password
+                    return el.email === email && el.password === password;
                 });
 
                 if (userlogin.length === 0) {
-                    alert("invalid details")
+                    alert('Invalid details');
                 } else {
-                    console.log("user login succesfulyy");
-
-                    localStorage.setItem("user_login", JSON.stringify(userlogin))
-
-                    history("/details")
+                    console.log('User login successfully');
+                    localStorage.setItem('user_login', JSON.stringify(userlogin));
+                    history('/details');
                 }
             }
         }
-
-    }
+    };
 
     return (
         <>
             <div className="container mt-3">
-                <section className='d-flex justify-content-between'>
-                    <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
-                        <h3 className='text-center col-lg-6'>Sign IN</h3>
-                        <Form >
-
+                <section className="d-flex justify-content-between">
+                    <div className="left_data mt-3 p-3" style={{ width: '100%' }}>
+                        <h3 className="text-center col-lg-6">Sign In</h3>
+                        <Form>
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-
-                                <Form.Control type="email" name='email' onChange={getdata} placeholder="Enter email" />
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    onChange={getdata}
+                                    placeholder="Enter email"
+                                />
                             </Form.Group>
-
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
-
-                                <Form.Control type="password" name='password' onChange={getdata} placeholder="Password" />
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    onChange={getdata}
+                                    placeholder="Password"
+                                />
                             </Form.Group>
-                            <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "#9EA5EA " }} type="submit">
+                            <Button
+                                variant="primary"
+                                className="col-lg-6"
+                                onClick={addData}
+                                style={{ background: '#9EA5EA ' }}
+                                type="submit"
+                            >
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span>SignIn</span> </p>
+                        <p className="mt-3">
+                            Already Have an Account <span>SignIn</span>{' '}
+                        </p>
                     </div>
-                    <SIgn_img />
                 </section>
                 <ToastContainer />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
